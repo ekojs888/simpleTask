@@ -3,19 +3,16 @@
   "version": "1.0.0",
   "description": "task simple for arduino with time mills",
   "keywords": "task, arduino, thread",
-  "repository":
-  {
+  "repository": {
     "type": "git",
     "url": "https://github.com/ekojs888/simpleTask.git"
   },
-  "authors":
-  [
+  "authors": [
     {
       "name": "eko johari saputra",
-      "email": "ekojs999@gmail.com",
-      "url": ""
+      "email": "ekojs999@gmail.com"
     }
-  ], 
+  ],
   "frameworks": "*",
   "platforms": "*"
 }
