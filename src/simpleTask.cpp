@@ -1,7 +1,7 @@
 #include <Arduino.h>
-#include "simpleTask.h"
+#include "task.h"
 
-task Task[TASK_MAX];
+task Task[TASK_PRIORTY][TASK_MAX];
 
 void task::KillTask()
 {
@@ -39,7 +39,14 @@ bool task::idle()
     }
     return false;
 }
-
+bool task::getToggle()
+{
+    return this->toggle;
+}
+bool task::getRunning()
+{
+    return this->running;
+}
 void task::run()
 {
     if (this->enable)
@@ -65,62 +72,4 @@ void task::run()
 void task::Exc(THandlerFunction fn)
 {
     this->fnc = fn;
-}
-
-thread *thread::NewTask(int delay)
-{
-    this->idleID = -1;
-    for (int a = 0; a < TASK_MAX; a++)
-    {
-        if (!Task[a].running)
-        {
-            this->idleID = a;
-            break;
-        }
-    }
-    Task[this->idleID].SetTask();
-    Task[this->idleID].setTimeMS(delay);
-    return this;
-}
-thread *thread::NewTaskC(int delay)
-{
-    this->idleID = -1;
-    for (int a = 0; a < TASK_MAX; a++)
-    {
-        if (!Task[a].running)
-        {
-            this->idleID = a;
-            break;
-        }
-    }
-    Task[this->idleID].SetTask();
-    Task[this->idleID].setTime(delay);
-    return this;
-}
-bool thread::Idle()
-{
-    return Task[this->idleID].idle();
-}
-
-bool thread::IdleToggle()
-{
-    return Task[this->idleID].toggle;
-}
-
-void thread::StopTask()
-{
-    Task[this->idleID].KillTask();
-}
-
-void thread::Enable()
-{
-    Task[this->idleID].setEnable();
-}
-void thread::Disable()
-{
-    Task[this->idleID].setDisable();
-}
-void thread::Exc(task::THandlerFunction fn)
-{
-    Task[this->idleID].Exc(fn);
 }
