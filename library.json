@@ -1,6 +1,6 @@
 {
   "name": "simpleTask",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "task simple for arduino with time mills",
   "keywords": "task, arduino, thread",
   "repository": {
