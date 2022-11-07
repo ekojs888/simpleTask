@@ -2,7 +2,6 @@
 #define __TASK__
 #define TASK_TIME_NOW_MC (micros())
 #define TASK_TIME_NOW_MS (millis())
-#include "config.h"
 #include <memory>
 
 #define TASK_MOD_MC
