@@ -1,4 +1,4 @@
-#include "task.h"
+#include "simpleTask.h"
 
 thread *thread::NewTask(int delay)
 {
