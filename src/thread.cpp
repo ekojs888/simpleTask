@@ -82,6 +82,7 @@ void thread::Mode(uint8_t mode)
 }
 void thread::Mode(uint8_t mode, String after)
 {
+    Task[this->priority][this->idleID].setDisable();
     Task[this->priority][this->idleID].mode = mode;
     Task[this->priority][this->idleID].runAfter = after;
 }
@@ -90,6 +91,22 @@ void thread::TaskName(String name)
     Task[this->priority][this->idleID].name = name;
 }
 
+void _taskRunAfterEn(String name)
+{
+    for (int b = 0; b < TASK_PRIORTY; b++)
+    {
+        for (int a = 0; a < TASK_MAX; a++)
+        {
+            if (Task[b][a].getRunning())
+            {
+                if (name == Task[b][a].runAfter && !name.isEmpty())
+                {
+                    Task[b][a].setEnable();
+                }
+            }
+        }
+    }
+}
 void _TaskRunning()
 {
     for (int b = 0; b < TASK_PRIORTY; b++)
@@ -99,6 +116,7 @@ void _TaskRunning()
             if (Task[b][a].getRunning())
             {
                 Task[b][a].run();
+                _taskRunAfterEn(Task[b][a].name);
             }
         }
     }
