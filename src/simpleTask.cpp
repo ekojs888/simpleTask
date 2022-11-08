@@ -51,8 +51,7 @@ void task::run()
 {
     if (this->enable)
     {
-
-        if ((TASK_TIME_NOW_MC - this->prevMills) >= this->delay)
+        if ((TASK_TIME_NOW_MC - this->prevMills) >= this->delay && this->delay != 0)
         {
             if (this->toggle)
             {
@@ -81,7 +80,7 @@ void task::run()
     }
 }
 
-void task::Exc(THandlerFunction fn)
+void task::Exc(HandlerFunc fn)
 {
     this->fnc = fn;
 }

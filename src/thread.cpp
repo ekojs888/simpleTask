@@ -1,3 +1,4 @@
+#include <Arduino.h>
 #include "simpleTask.h"
 
 thread *thread::NewTask(int delay)
@@ -12,6 +13,7 @@ thread *thread::NewTask(int delay)
             break;
         }
     }
+    Task[this->priority][this->idleID].id = this->idleID;
     Task[this->priority][this->idleID].SetTask();
     Task[this->priority][this->idleID].setTimeMS(delay);
     return this;
@@ -70,14 +72,22 @@ thread *thread::NewTask(int delay, uint8_t priority)
 // {
 //     Task[this->idleID].setDisable();
 // }
-void thread::Exc(task::THandlerFunction fn)
+void thread::Exc(task::HandlerFunc fn)
 {
     Task[this->priority][this->idleID].Exc(fn);
 }
 void thread::Mode(uint8_t mode)
 {
     Task[this->priority][this->idleID].mode = mode;
-    Task[this->priority][this->idleID].modeSts = 1;
+}
+void thread::Mode(uint8_t mode, String after)
+{
+    Task[this->priority][this->idleID].mode = mode;
+    Task[this->priority][this->idleID].runAfter = after;
+}
+void thread::TaskName(String name)
+{
+    Task[this->priority][this->idleID].name = name;
 }
 
 void _TaskRunning()

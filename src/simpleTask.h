@@ -18,21 +18,21 @@ class task
 private:
     unsigned long prevMills;
     int delay = 0;
-    bool vidle = false;
 
+    bool vidle = false;
+    bool toggle = false;
     bool running = false;
     bool enable = false;
-    bool toggle = false;
 
 public:
+    String name, runAfter;
+    int id;
     uint8_t priority = 0; // 0,1,2,3,4
     uint8_t mode = TASK_MODE_DEFAULT;
-    uint8_t modeSts = 0;
-    uint8_t runAfter = -1;
 
-    typedef std::function<void(void)> THandlerFunction;
-    THandlerFunction fnc;
-    void Exc(THandlerFunction);
+    typedef std::function<void(void)> HandlerFunc;
+    HandlerFunc fnc;
+    void Exc(HandlerFunc);
     void SetTask();
     void KillTask();
     void setTime(int);
@@ -52,17 +52,13 @@ struct thread
     int idleID = 0;
     uint8_t priority = 0; // 0,1,2,3,4
 
-    // thread *NewTaskC(int delay);
-    // bool Idle();
-    // bool IdleToggle();
-    // void Disable();
-    // void Enable();
-
     thread *NewTask(int delay);
     thread *NewTask(int delay, uint8_t priority);
+    void TaskName(String name);
     void Mode(uint8_t mode);
+    void Mode(uint8_t mode, String after);
     void StopTask();
-    void Exc(task::THandlerFunction);
+    void Exc(task::HandlerFunc);
 };
 
 extern task Task[TASK_PRIORTY][TASK_MAX];
