@@ -62,7 +62,19 @@ void task::run()
             {
                 this->toggle = true;
             }
-            this->fnc();
+
+            switch (this->mode)
+            {
+            case 0:
+                this->fnc();
+                this->enable = false;
+                break;
+            case 1:
+                this->fnc();
+                break;
+            default:
+                break;
+            }
             this->vidle = true;
             this->prevMills = TASK_TIME_NOW_MC;
         }

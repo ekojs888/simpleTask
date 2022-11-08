@@ -8,13 +8,10 @@
 #define TASK_MAX 100
 #define TASK_PRIORTY 6
 
-// typedef std::function<void(void)> THandlerFunction;
+#define TASK_MODE_ONESHOOT 0
+#define TASK_MODE_DEFAULT 1
 
-enum modeExc
-{
-    OneShoot,
-    Default,
-};
+// typedef std::function<void(void)> THandlerFunction;
 
 class task
 {
@@ -29,7 +26,8 @@ private:
 
 public:
     uint8_t priority = 0; // 0,1,2,3,4
-    modeExc mode = Default;
+    uint8_t mode = TASK_MODE_DEFAULT;
+    uint8_t modeSts = 0;
     uint8_t runAfter = -1;
 
     typedef std::function<void(void)> THandlerFunction;
@@ -39,6 +37,7 @@ public:
     void KillTask();
     void setTime(int);
     void setTimeMS(int);
+    void setMode(int);
 
     bool getToggle();
     bool getRunning();
@@ -53,10 +52,6 @@ struct thread
     int idleID = 0;
     uint8_t priority = 0; // 0,1,2,3,4
 
-    // rencana kedepan
-    modeExc mode = Default;
-    uint8_t runAfter = -1;
-
     // thread *NewTaskC(int delay);
     // bool Idle();
     // bool IdleToggle();
@@ -65,7 +60,7 @@ struct thread
 
     thread *NewTask(int delay);
     thread *NewTask(int delay, uint8_t priority);
-    void Mode(modeExc mode);
+    void Mode(uint8_t mode);
     void StopTask();
     void Exc(task::THandlerFunction);
 };

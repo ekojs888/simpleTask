@@ -74,8 +74,10 @@ void thread::Exc(task::THandlerFunction fn)
 {
     Task[this->priority][this->idleID].Exc(fn);
 }
-void thread::Mode(modeExc mode)
+void thread::Mode(uint8_t mode)
 {
+    Task[this->priority][this->idleID].mode = mode;
+    Task[this->priority][this->idleID].modeSts = 1;
 }
 
 void _TaskRunning()
