@@ -7,6 +7,22 @@ void task::KillTask()
 {
     this->running = false;
 }
+void task::KillTask(int id)
+{
+    Task[id].running = false;
+}
+void task::KillTask(String name)
+{
+    for (int a = 0; a < TASK_MAX; a++)
+    {
+        if (Task[a].getRunning() && Task[a].name == name)
+        {
+            Task[a].running = false;
+            Serial.println(Task[a].name);
+            break;
+        }
+    }
+}
 void task::SetTask()
 {
     this->running = true;
@@ -65,11 +81,13 @@ void task::run()
             switch (this->mode)
             {
             case 0:
-                this->fnc();
+                this->fnc2(this);
+                // this->fnc();
                 this->enable = false;
                 break;
             case 1:
-                this->fnc();
+                this->fnc2(this);
+                // this->fnc();
                 break;
             default:
                 break;
@@ -83,4 +101,9 @@ void task::run()
 void task::Exc(HandlerFunc fn)
 {
     this->fnc = fn;
+}
+
+void task::Exc(HandlerFunc2 fn)
+{
+    this->fnc2 = fn;
 }

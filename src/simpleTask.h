@@ -31,10 +31,15 @@ public:
     uint8_t mode = TASK_MODE_DEFAULT;
 
     typedef std::function<void(void)> HandlerFunc;
+    typedef std::function<void(task *arg)> HandlerFunc2;
     HandlerFunc fnc;
+    HandlerFunc2 fnc2;
+    void Exc(HandlerFunc2 fn);
     void Exc(HandlerFunc);
     void SetTask();
     void KillTask();
+    void KillTask(int id);
+    void KillTask(String name);
     void setTime(int);
     void setTimeMS(int);
     void setMode(int);
@@ -61,6 +66,7 @@ public:
     void Mode(uint8_t mode, String after);
     void StopTask();
     void Exc(task::HandlerFunc);
+    void Exc(task::HandlerFunc2);
 };
 
 extern task Task[TASK_MAX];

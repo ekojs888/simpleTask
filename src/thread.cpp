@@ -69,6 +69,10 @@ void thread::Exc(task::HandlerFunc fn)
 {
     Task[this->idleID].Exc(fn);
 }
+void thread::Exc(task::HandlerFunc2 fn)
+{
+    Task[this->idleID].Exc(fn);
+}
 void thread::Mode(uint8_t mode)
 {
     Task[this->idleID].mode = mode;
@@ -103,15 +107,19 @@ void _TaskRunning()
     {
         for (int b = 0; b < TASK_MAX; b++)
         {
-            if (Task[b].getRunning())
+            // skip if task not used or not runing
+            if (!Task[b].getRunning())
             {
-                if (Task[b].priority == a)
+                continue;
+            }
+
+            // coperate priority and enable after
+            if (Task[b].priority == a)
+            {
+                Task[b].run();
+                if (Task[b].idle())
                 {
-                    Task[b].run();
-                    if (Task[b].idle())
-                    {
-                        _taskRunAfterEn(Task[b].name);
-                    }
+                    _taskRunAfterEn(Task[b].name);
                 }
             }
         }
