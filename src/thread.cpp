@@ -87,6 +87,11 @@ void thread::TaskName(String name)
 {
     Task[this->idleID].name = name;
 }
+void thread::SetAfter(String after)
+{
+    Task[this->idleID].setDisable();
+    Task[this->idleID].runAfter = after;
+}
 
 void _taskRunAfterEn(String name)
 {

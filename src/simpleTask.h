@@ -67,6 +67,7 @@ public:
     void TaskName(String name);
     void Mode(uint8_t mode);
     void Mode(uint8_t mode, String after);
+    void SetAfter(String after);
     void StopTask();
     void Exc(task::HandlerFunc);
     void Exc(task::HandlerFunc2);
