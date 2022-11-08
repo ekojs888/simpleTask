@@ -1,7 +1,7 @@
 #include <Arduino.h>
 #include "simpleTask.h"
 
-task Task[TASK_PRIORTY][TASK_MAX];
+task Task[TASK_MAX];
 
 void task::KillTask()
 {

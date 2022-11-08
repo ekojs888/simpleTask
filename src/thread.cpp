@@ -1,122 +1,118 @@
 #include <Arduino.h>
 #include "simpleTask.h"
 
-thread *thread::NewTask(int delay)
+void thread::NewTask(int delay)
 {
-    this->priority = 5;
     this->idleID = -1;
     for (int a = 0; a < TASK_MAX; a++)
     {
-        if (!Task[this->priority][a].getRunning())
+        if (!Task[a].getRunning())
         {
             this->idleID = a;
             break;
         }
     }
-    Task[this->priority][this->idleID].id = this->idleID;
-    Task[this->priority][this->idleID].SetTask();
-    Task[this->priority][this->idleID].setTimeMS(delay);
-    return this;
+    if (this->idleID != -1)
+    {
+        Task[this->idleID].priority = 5;
+        Task[this->idleID].id = this->idleID;
+        Task[this->idleID].SetTask();
+        Task[this->idleID].setTimeMS(delay);
+    }
 }
-thread *thread::NewTask(int delay, uint8_t priority)
+void thread::NewTask(int delay, uint8_t priority)
 {
-    this->priority = priority;
     this->idleID = -1;
     for (int a = 0; a < TASK_MAX; a++)
     {
-        if (!Task[priority][a].getRunning())
+        if (!Task[a].getRunning())
         {
             this->idleID = a;
             break;
         }
     }
-    Task[this->priority][this->idleID].SetTask();
-    Task[this->priority][this->idleID].setTimeMS(delay);
-    return this;
+    if (this->idleID != -1)
+    {
+        if (priority > 5)
+            priority = 5;
+        Task[this->idleID].priority = priority;
+        Task[this->idleID].id = this->idleID;
+        Task[this->idleID].SetTask();
+        Task[this->idleID].setTimeMS(delay);
+    }
 }
-// thread *thread::NewTaskC(int delay)
-// {
-//     this->idleID = -1;
-//     for (int a = 0; a < TASK_MAX; a++)
-//     {
-//         if (!Task[a].getRunning())
-//         {
-//             this->idleID = a;
-//             break;
-//         }
-//     }
-//     Task[this->idleID].SetTask();
-//     Task[this->idleID].setTime(delay);
-//     return this;
-// }
-// bool thread::Idle()
-// {
-//     return Task[this->idleID].idle();
-// }
-
-// bool thread::IdleToggle()
-// {
-//     return Task[this->idleID].getToggle();
-// }
-
-// void thread::StopTask()
-// {
-//     Task[this->idleID].KillTask();
-// }
-
-// void thread::Enable()
-// {
-//     Task[this->idleID].setEnable();
-// }
-// void thread::Disable()
-// {
-//     Task[this->idleID].setDisable();
-// }
+void thread::NewTask(int delay, uint8_t priority, bool us)
+{
+    this->idleID = -1;
+    for (int a = 0; a < TASK_MAX; a++)
+    {
+        if (!Task[a].getRunning())
+        {
+            this->idleID = a;
+            break;
+        }
+    }
+    if (this->idleID != -1)
+    {
+        if (priority > 5)
+            priority = 5;
+        Task[this->idleID].priority = priority;
+        Task[this->idleID].id = this->idleID;
+        Task[this->idleID].SetTask();
+        if (us)
+            Task[this->idleID].setTime(delay);
+        else
+            Task[this->idleID].setTimeMS(delay);
+    }
+}
 void thread::Exc(task::HandlerFunc fn)
 {
-    Task[this->priority][this->idleID].Exc(fn);
+    Task[this->idleID].Exc(fn);
 }
 void thread::Mode(uint8_t mode)
 {
-    Task[this->priority][this->idleID].mode = mode;
+    Task[this->idleID].mode = mode;
 }
 void thread::Mode(uint8_t mode, String after)
 {
-    Task[this->priority][this->idleID].setDisable();
-    Task[this->priority][this->idleID].mode = mode;
-    Task[this->priority][this->idleID].runAfter = after;
+    Task[this->idleID].setDisable();
+    Task[this->idleID].mode = mode;
+    Task[this->idleID].runAfter = after;
 }
 void thread::TaskName(String name)
 {
-    Task[this->priority][this->idleID].name = name;
+    Task[this->idleID].name = name;
 }
 
 void _taskRunAfterEn(String name)
 {
-    for (int b = 0; b < TASK_PRIORTY; b++)
+    for (int a = 0; a < TASK_MAX; a++)
     {
-        for (int a = 0; a < TASK_MAX; a++)
+        if (Task[a].getRunning())
         {
-            if (Task[b][a].getRunning())
+            if (name == Task[a].runAfter && !Task[a].runAfter.isEmpty())
             {
-                if (name == Task[b][a].runAfter && !name.isEmpty())
-                {
-                    Task[b][a].setEnable();
-                }
+                Task[a].setEnable();
             }
         }
     }
 }
 void _TaskRunning()
 {
-    for (int b = 0; b < TASK_PRIORTY; b++)
+    for (int a = 0; a < TASK_PRIORTY; a++)
     {
-        for (int a = 0; a < TASK_MAX; a++)
+        for (int b = 0; b < TASK_MAX; b++)
         {
-            if (Task[b][a].getRunning())
+            if (Task[b].getRunning())
             {
-                Task[b][a].run();
-                _taskRunAfterEn(Task[b][a].name);
+                if (Task[b].priority == a)
+                {
+                    Task[b].run();
+                    if (Task[b].idle())
+                    {
+                        _taskRunAfterEn(Task[b].name);
+                    }
+                }
             }
         }
     }

@@ -49,11 +49,13 @@ public:
 
 struct thread
 {
+private:
+public:
     int idleID = 0;
-    uint8_t priority = 0; // 0,1,2,3,4
 
-    thread *NewTask(int delay);
-    thread *NewTask(int delay, uint8_t priority);
+    void NewTask(int delay);
+    void NewTask(int delay, uint8_t priority);
+    void NewTask(int delay, uint8_t priority, bool us);
     void TaskName(String name);
     void Mode(uint8_t mode);
     void Mode(uint8_t mode, String after);
@@ -61,7 +63,7 @@ struct thread
     void Exc(task::HandlerFunc);
 };
 
-extern task Task[TASK_PRIORTY][TASK_MAX];
+extern task Task[TASK_MAX];
 
 void _TaskRunning();
 #endif
