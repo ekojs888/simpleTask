@@ -63,6 +63,17 @@ bool task::getRunning()
 {
     return this->running;
 }
+void task::runFunc()
+{
+    if (this->handFuncPointer)
+    {
+        this->fnc2(this);
+    }
+    else
+    {
+        this->fnc();
+    }
+}
 void task::run()
 {
     if (this->enable)
@@ -81,13 +92,11 @@ void task::run()
             switch (this->mode)
             {
             case 0:
-                this->fnc2(this);
-                // this->fnc();
+                this->runFunc();
                 this->enable = false;
                 break;
             case 1:
-                this->fnc2(this);
-                // this->fnc();
+                this->runFunc();
                 break;
             default:
                 break;
@@ -105,5 +114,6 @@ void task::Exc(HandlerFunc fn)
 
 void task::Exc(HandlerFunc2 fn)
 {
+    this->handFuncPointer = true;
     this->fnc2 = fn;
 }

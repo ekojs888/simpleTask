@@ -15,15 +15,6 @@
 
 class task
 {
-private:
-    unsigned long prevMills;
-    int delay = 0;
-
-    bool vidle = false;
-    bool toggle = false;
-    bool running = false;
-    bool enable = false;
-
 public:
     String name, runAfter;
     int id;
@@ -32,8 +23,7 @@ public:
 
     typedef std::function<void(void)> HandlerFunc;
     typedef std::function<void(task *arg)> HandlerFunc2;
-    HandlerFunc fnc;
-    HandlerFunc2 fnc2;
+
     void Exc(HandlerFunc2 fn);
     void Exc(HandlerFunc);
     void SetTask();
@@ -50,6 +40,19 @@ public:
     void setEnable();
     bool idle();
     void run();
+
+private:
+    unsigned long prevMills;
+    int delay = 0;
+
+    bool vidle = false;
+    bool toggle = false;
+    bool running = false;
+    bool enable = false;
+    bool handFuncPointer = false;
+    HandlerFunc fnc;
+    HandlerFunc2 fnc2;
+    void runFunc();
 };
 
 struct thread
