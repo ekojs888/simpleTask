@@ -2,7 +2,7 @@
 #define __TASK__
 #define TASK_TIME_NOW_MC (micros())
 #define TASK_TIME_NOW_MS (millis())
-#include <memory>
+// #include <memory>
 
 #define TASK_MOD_MC
 #define TASK_MAX 100
@@ -21,8 +21,10 @@ public:
     uint8_t priority = 0; // 0,1,2,3,4
     uint8_t mode = TASK_MODE_DEFAULT;
 
-    typedef std::function<void(void)> HandlerFunc;
-    typedef std::function<void(task *arg)> HandlerFunc2;
+    // typedef std::function<void(void)> HandlerFunc;
+    // typedef std::function<void(task *arg)> HandlerFunc2;
+    typedef void (*HandlerFunc)(void);
+    typedef void (*HandlerFunc2)(task *arg);
 
     void Exc(HandlerFunc2 fn);
     void Exc(HandlerFunc);
