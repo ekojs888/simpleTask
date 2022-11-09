@@ -72,26 +72,27 @@ private:
 struct thread
 {
 private:
+    int ID = -1;
+
 public:
-    int idleID = 0;
+    task *NewTask(int delay);
+    task *NewTask(int delay, uint8_t priority);
+    task *NewTask(int delay, uint8_t priority, bool us);
 
-    void NewTask(int delay);
-    void NewTask(int delay, uint8_t priority);
-    void NewTask(int delay, uint8_t priority, bool us);
-
+    task *GetTask();
     task *GetTask(int id);
     task *GetTask(String name);
 
-    void TaskName(String name);
-    void Mode(uint8_t mode);
-    void Mode(uint8_t mode, String after);
-    void SetAfter(String after);
-    void StopTask();
-    void Kill();
-    void Kill(String name);
-    void Kill(int id);
-    void Exc(task::HandlerFunc);
-    void Exc(task::HandlerFunc2);
+    // void TaskName(String name);
+    // void Mode(uint8_t mode);
+    // void Mode(uint8_t mode, String after);
+    // void SetAfter(String after);
+    // void StopTask();
+    // void Kill();
+    // void Kill(String name);
+    // void Kill(int id);
+    // void Exc(task::HandlerFunc);
+    // void Exc(task::HandlerFunc2);
 };
 
 extern task Task[TASK_MAX];
