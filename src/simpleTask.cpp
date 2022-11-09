@@ -7,22 +7,7 @@ void task::KillTask()
 {
     this->running = false;
 }
-void task::KillTask(int id)
-{
-    Task[id].running = false;
-}
-void task::KillTask(String name)
-{
-    for (int a = 0; a < TASK_MAX; a++)
-    {
-        if (Task[a].getRunning() && Task[a].name == name)
-        {
-            Task[a].running = false;
-            Serial.println(Task[a].name);
-            break;
-        }
-    }
-}
+
 void task::SetTask()
 {
     this->running = true;
@@ -59,7 +44,11 @@ bool task::getToggle()
 {
     return this->toggle;
 }
-bool task::getRunning()
+void task::SetRunning(bool sts)
+{
+    this->running = sts;
+}
+bool task::GetRunning()
 {
     return this->running;
 }
@@ -116,4 +105,54 @@ void task::Exc(HandlerFunc2 fn)
 {
     this->handFuncPointer = true;
     this->fnc2 = fn;
+}
+
+void task::SetMode(uint8_t mode)
+{
+    this->mode = mode;
+}
+void task::SetMode(uint8_t mode, String after)
+{
+    this->setDisable();
+    this->mode = mode;
+    this->runAfter = after;
+}
+uint8_t task::GetMode()
+{
+    return this->mode;
+}
+void task::SetName(String name)
+{
+    this->name = name;
+}
+int task::GetID()
+{
+    return this->id;
+}
+void task::SetID(int id)
+{
+    this->id = id;
+}
+int task::GetPriority()
+{
+    return this->priority;
+}
+void task::SetPriority(int pr)
+{
+    if (pr > 5)
+        pr = 5;
+    this->priority = pr;
+}
+String task::GetName()
+{
+    return this->name;
+}
+void task::SetRunAfter(String after)
+{
+    this->setDisable();
+    this->runAfter = after;
+}
+String task::GetRunAfter()
+{
+    return this->runAfter;
 }
