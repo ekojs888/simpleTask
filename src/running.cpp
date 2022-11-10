@@ -7,7 +7,7 @@ void _taskRunAfterEn(String name)
     {
         if (Task[a].GetRunning())
         {
-            if (name == Task[a].GetRunAfter() && !Task[a].GetRunAfter().isEmpty())
+            if (name == Task[a].GetRunAfter() && !Task[a].GetRunAfter().isEmpty() && !Task[a].GetEnable())
             {
                 Task[a].setEnable();
             }
