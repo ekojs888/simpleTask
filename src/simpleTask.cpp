@@ -160,3 +160,20 @@ String task::GetRunAfter()
 {
     return this->runAfter;
 }
+
+task *task::GetTask(String name)
+{
+    int a;
+    for (a = 0; a < TASK_MAX; a++)
+    {
+        if (Task[a].GetRunning() && Task[a].GetName() == name)
+        {
+            break;
+        }
+    }
+    return &Task[a];
+}
+task *task::GetTask(int id)
+{
+    return &Task[id];
+}

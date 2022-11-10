@@ -50,6 +50,9 @@ public:
     bool idle();
     void run();
 
+    task *GetTask(int id);
+    task *GetTask(String name);
+
 private:
     unsigned long prevMills;
     int delay = 0;
