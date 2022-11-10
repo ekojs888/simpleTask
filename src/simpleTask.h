@@ -2,7 +2,6 @@
 #define __TASK__
 #define TASK_TIME_NOW_MC (micros())
 #define TASK_TIME_NOW_MS (millis())
-// #include <memory>
 
 #define TASK_MOD_MC
 #define TASK_MAX 100
@@ -11,12 +10,9 @@
 #define TASK_MODE_ONESHOOT 0
 #define TASK_MODE_DEFAULT 1
 
-// typedef std::function<void(void)> THandlerFunction;
 class task
 {
 public:
-    // typedef std::function<void(void)> HandlerFunc;
-    // typedef std::function<void(task *arg)> HandlerFunc2;
     typedef void (*HandlerFunc)(void);
     typedef void (*HandlerFunc2)(task *arg);
 
@@ -86,17 +82,6 @@ public:
     task *GetTask();
     task *GetTask(int id);
     task *GetTask(String name);
-
-    // void TaskName(String name);
-    // void Mode(uint8_t mode);
-    // void Mode(uint8_t mode, String after);
-    // void SetAfter(String after);
-    // void StopTask();
-    // void Kill();
-    // void Kill(String name);
-    // void Kill(int id);
-    // void Exc(task::HandlerFunc);
-    // void Exc(task::HandlerFunc2);
 };
 
 extern task Task[TASK_MAX];
