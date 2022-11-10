@@ -31,6 +31,10 @@ void task::setEnable()
 {
     this->enable = true;
 }
+bool task::GetEnable()
+{
+    return this->enable;
+}
 bool task::idle()
 {
     if (this->vidle)

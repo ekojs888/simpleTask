@@ -46,6 +46,7 @@ public:
     bool getToggle();
     void setDisable();
     void setEnable();
+    bool GetEnable();
     bool idle();
     void run();
 
