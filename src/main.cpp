@@ -6,7 +6,6 @@ void tesInit()
     Serial.begin(9600);
     pinMode(2, OUTPUT);
     Serial.println("app task v1.1.0");
-    log("hallow %i\n", 100);
 }
 
 void tesBar(task *Arg)
@@ -16,7 +15,7 @@ void tesBar(task *Arg)
 }
 void tesRun2(task *Arg)
 {
-    log("hallow word");
+    Serial.println("hallow word");
 }
 
 int ac = 100;
