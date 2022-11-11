@@ -1,11 +1,12 @@
 #include <Arduino.h>
-#include <simpleTask.h>
+#include "simpleTask.h"
+#include "log.h"
 
 void tesInit()
 {
-    Serial.begin(9600);
+    Log.init(9600);
     pinMode(2, OUTPUT);
-    Serial.println("app task v1.1.0");
+    Log.Print("app task v1.1.0");
 }
 
 void tesBar(task *Arg)
@@ -15,7 +16,7 @@ void tesBar(task *Arg)
 }
 void tesRun2(task *Arg)
 {
-    Serial.println("hallow word");
+    Log.Print("hallow word");
 }
 
 int ac = 100;
