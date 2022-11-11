@@ -12,6 +12,7 @@ int logging::Print(const char *format, ...)
 {
     int len = 0;
 #ifdef LOG_EN
+    // this refrence from aruino print
     char loc_buf[64];
     char *temp = loc_buf;
     va_list arg;
