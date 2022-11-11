@@ -6,6 +6,8 @@ void logging::init(unsigned long baud)
 {
 #ifdef LOG_EN
     Serial.begin(baud);
+#else
+    NOP();
 #endif
 }
 int logging::Print(const char *format, ...)
