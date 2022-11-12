@@ -58,19 +58,24 @@ bool task::GetRunning()
 }
 void task::runFunc()
 {
-    if (this->handFuncPointer)
+    if (this->funcOk)
     {
-        this->fnc2(this);
-    }
-    else
-    {
-        this->fnc();
+        if (this->handFuncPointer)
+        {
+            this->fnc2(this);
+        }
+        else
+        {
+            this->fnc();
+        }
     }
 }
+
 void task::run()
 {
     if (this->enable)
     {
+        // run loop func
         if ((TASK_TIME_NOW_MC - this->prevMills) >= this->delay && this->delay != 0)
         {
             if (this->toggle)
@@ -84,15 +89,19 @@ void task::run()
 
             switch (this->mode)
             {
-            case 0:
+            case TASK_MODE_ONESHOOT:
                 this->runFunc();
                 this->enable = false;
                 break;
-            case 1:
+            case TASK_MODE_DEFAULT:
                 this->runFunc();
                 break;
             default:
                 break;
+            }
+            if (this->funcShootOne)
+            {
+                this->funcShootOne = false;
             }
             this->vidle = true;
             this->prevMills = TASK_TIME_NOW_MC;
@@ -100,16 +109,36 @@ void task::run()
     }
 }
 
+bool task::GetShootOne()
+{
+    return this->funcShootOne;
+}
+
 void task::Exc(HandlerFunc fn)
 {
+    this->funcOk = true;
     this->fnc = fn;
 }
 
 void task::Exc(HandlerFunc2 fn)
 {
+    this->funcOk = true;
     this->handFuncPointer = true;
     this->fnc2 = fn;
 }
+
+// void task::ExcInt(HandlerFunc fn)
+// {
+//     this->funcIntOk = true;
+//     this->fncInit = fn;
+// }
+
+// void task::ExcInt(HandlerFunc2 fn)
+// {
+//     this->funcIntOk = true;
+//     this->handFuncPointer = true;
+//     this->fncInit2 = fn;
+// }
 
 void task::SetMode(uint8_t mode)
 {

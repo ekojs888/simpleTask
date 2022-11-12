@@ -10,6 +10,13 @@
 #define TASK_MODE_ONESHOOT 0
 #define TASK_MODE_DEFAULT 1
 
+#define TASK_PRIORTY_0 0
+#define TASK_PRIORTY_1 1
+#define TASK_PRIORTY_2 2
+#define TASK_PRIORTY_3 3
+#define TASK_PRIORTY_4 4
+#define TASK_PRIORTY_5 5
+
 class task
 {
 public:
@@ -38,11 +45,14 @@ public:
     void KillTask();
     void Exc(HandlerFunc2 fn);
     void Exc(HandlerFunc);
+    // void ExcInt(HandlerFunc);
+    // void ExcInt(HandlerFunc2 fn);
 
     bool getToggle();
     void setDisable();
     void setEnable();
     bool GetEnable();
+    bool GetShootOne();
     bool idle();
     void run();
 
@@ -58,6 +68,11 @@ private:
     bool running = false;
     bool enable = false;
     bool handFuncPointer = false;
+    bool funcIntOk = false;
+    bool funcOk = false;
+    bool funcShootOne = true;
+    // HandlerFunc fncInit;
+    // HandlerFunc2 fncInit2;
     HandlerFunc fnc;
     HandlerFunc2 fnc2;
 

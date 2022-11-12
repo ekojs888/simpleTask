@@ -2,7 +2,7 @@
 #define __LOGGING__
 #include <Arduino.h>
 
-#define LOG_EN
+// #define LOG_EN
 
 class logging
 {
