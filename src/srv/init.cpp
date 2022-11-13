@@ -4,6 +4,7 @@ void RunInit()
 {
     Srvinit();
     SrvTes();
+    SrvSerialInit();
 }
 
 void Srvinit()

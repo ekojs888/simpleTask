@@ -18,4 +18,5 @@ void SrvExcTes(task *Arg)
         pinMode(GPIO_NUM_2, OUTPUT);
     }
     digitalWrite(GPIO_NUM_2, Arg->getToggle());
+    Log.Print("tes : %s\n", SrvSerialRead());
 }
