@@ -94,9 +94,8 @@ private:
     void searchID();
 
 public:
-    task *NewTask(int delay);
-    task *NewTask(int delay, uint8_t priority);
-    task *NewTask(int delay, uint8_t priority, String name, task::HandlerFunc fn);
+    task *NewTask(uint8_t priority);
+    task *NewTask(uint8_t priority, String name, task::HandlerFunc fn);
 
     task *GetTask();
     task *GetTask(int id);
