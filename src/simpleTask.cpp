@@ -17,11 +17,6 @@ void task::setTime(int delay)
     this->enable = true;
     this->delay = delay;
 }
-void task::setTimeMS(int delay)
-{
-    this->enable = true;
-    this->delay = delay * 1000;
-}
 
 void task::setDisable()
 {
@@ -60,14 +55,28 @@ void task::runFunc()
 {
     if (this->funcOk)
     {
-        if (this->handFuncPointer)
+        this->fnc(this);
+        switch (this->mode)
         {
-            this->fnc2(this);
+        case TASK_MODE_ONESHOOT:
+            this->enable = false;
+            break;
+        case TASK_MODE_DEFAULT:
+            break;
+        default:
+            break;
         }
-        else
-        {
-            this->fnc();
-        }
+    }
+}
+void task::runToggle()
+{
+    if (this->toggle)
+    {
+        this->toggle = false;
+    }
+    else
+    {
+        this->toggle = true;
     }
 }
 
@@ -78,31 +87,8 @@ void task::run()
         // run loop func
         if ((TASK_TIME_NOW_MC - this->prevMills) >= this->delay && this->delay != 0)
         {
-            if (this->toggle)
-            {
-                this->toggle = false;
-            }
-            else
-            {
-                this->toggle = true;
-            }
-
-            switch (this->mode)
-            {
-            case TASK_MODE_ONESHOOT:
-                this->runFunc();
-                this->enable = false;
-                break;
-            case TASK_MODE_DEFAULT:
-                this->runFunc();
-                break;
-            default:
-                break;
-            }
-            if (this->funcShootOne)
-            {
-                this->funcShootOne = false;
-            }
+            this->runToggle();
+            this->runFunc();
             this->vidle = true;
             this->prevMills = TASK_TIME_NOW_MC;
         }
@@ -114,49 +100,50 @@ bool task::GetShootOne()
     return this->funcShootOne;
 }
 
-void task::Exc(HandlerFunc fn)
+task *task::Exc(HandlerFunc fn)
+{
+    this->fnc = fn;
+    this->setDisable();
+    return this;
+}
+task *task::Loop(HandlerFunc fn)
 {
     this->funcOk = true;
     this->fnc = fn;
+    return this;
 }
-
-void task::Exc(HandlerFunc2 fn)
+task *task::Loop(HandlerFunc fn, int delay)
 {
     this->funcOk = true;
-    this->handFuncPointer = true;
-    this->fnc2 = fn;
+    this->fnc = fn;
+    this->delay = delay;
+    return this;
 }
 
-// void task::ExcInt(HandlerFunc fn)
-// {
-//     this->funcIntOk = true;
-//     this->fncInit = fn;
-// }
-
-// void task::ExcInt(HandlerFunc2 fn)
-// {
-//     this->funcIntOk = true;
-//     this->handFuncPointer = true;
-//     this->fncInit2 = fn;
-// }
-
-void task::SetMode(uint8_t mode)
+task *task::SetMode(uint8_t mode)
 {
     this->mode = mode;
+    return this;
 }
-void task::SetMode(uint8_t mode, String after)
+task *task::SetMode(uint8_t mode, String after)
 {
     this->setDisable();
     this->mode = mode;
     this->runAfter = after;
+    return this;
 }
 uint8_t task::GetMode()
 {
     return this->mode;
 }
-void task::SetName(String name)
+// void task::SetName(String name)
+// {
+//     this->name = name;
+// }
+task *task::SetName(String name)
 {
     this->name = name;
+    return this;
 }
 int task::GetID()
 {
@@ -180,10 +167,11 @@ String task::GetName()
 {
     return this->name;
 }
-void task::SetRunAfter(String after)
+task *task::SetRunAfter(String after)
 {
     this->setDisable();
     this->runAfter = after;
+    return this;
 }
 String task::GetRunAfter()
 {
@@ -205,4 +193,10 @@ task *task::GetTask(String name)
 task *task::GetTask(int id)
 {
     return &Task[id];
+}
+
+void task::RunInit()
+{
+    this->fnc(this);
+    this->setEnable();
 }

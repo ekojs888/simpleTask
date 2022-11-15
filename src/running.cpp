@@ -1,6 +1,27 @@
 #include <Arduino.h>
 #include "simpleTask.h"
 
+void _TaskRunInit()
+{
+    for (int a = 0; a < TASK_PRIORTY; a++)
+    {
+        for (int b = 0; b < TASK_MAX; b++)
+        {
+            // skip if task not used or not runing
+            if (!Task[b].GetRunning())
+            {
+                continue;
+            }
+
+            // coperate priority and enable after
+            if (Task[b].GetPriority() == a)
+            {
+                Task[b].RunInit();
+            }
+        }
+    }
+}
+
 void _taskRunAfterEn(String name)
 {
     for (int a = 0; a < TASK_MAX; a++)
@@ -14,8 +35,10 @@ void _taskRunAfterEn(String name)
         }
     }
 }
+
 void _TaskRunning()
 {
+
     for (int a = 0; a < TASK_PRIORTY; a++)
     {
         for (int b = 0; b < TASK_MAX; b++)
@@ -37,4 +60,15 @@ void _TaskRunning()
             }
         }
     }
+}
+
+// task Arudino
+void setup()
+{
+    _SimpleTask();
+    _TaskRunInit();
+}
+void loop()
+{
+    _TaskRunning();
 }
