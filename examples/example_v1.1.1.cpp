@@ -1,6 +1,7 @@
 #include <Arduino.h>
 #include <simpleTask.h>
-#include "log.h"
+// add build_flags = -D LOG_EN=true in platformio.ini
+#include <simpleLog.h>
 
 // this example for version ^1.1.1
 
