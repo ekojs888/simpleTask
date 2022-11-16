@@ -1,6 +1,6 @@
 #include <Arduino.h>
 #include <simpleTask.h>
-// add lib_defs = -D LOG_EN=true in platformio.ini
+// add build_flags = -D LOG_EN=true in platformio.ini
 #include <simpleLog.h>
 
 // this example for version ^1.1.1
