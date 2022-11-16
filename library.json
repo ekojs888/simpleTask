@@ -1,6 +1,6 @@
 {
   "name": "simpleTask",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "task simple for arduino with time mills \n setup without setup() and loop() function in project \n, once declaratiion function _SimpleTask()",
   "keywords": "task, arduino, thread",
   "repository": {

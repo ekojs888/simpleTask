@@ -63,6 +63,7 @@ void _TaskRunning()
 }
 
 // task Arudino
+#ifdef TASK_MOD
 void setup()
 {
     _SimpleTask();
@@ -72,3 +73,4 @@ void loop()
 {
     _TaskRunning();
 }
+#endif
