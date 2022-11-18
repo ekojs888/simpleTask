@@ -4,7 +4,13 @@
 #define TASK_TIME_NOW_MS (millis())
 
 #define TASK_MOD_MC
+
+#ifndef TASK_MAX_NUM
 #define TASK_MAX 100
+#else
+#define TASK_MAX (TASK_MAX_NUM)
+#endif
+
 #define TASK_PRIORTY 6
 
 #define TASK_MODE_ONESHOOT 0
