@@ -8,7 +8,7 @@ int no = 0;
 void tes1(task *Arg)
 {
     pinMode(2, OUTPUT);
-    Serial.println("test first");
+    Log.Print("test firstn\n");
     Arg->Loop(tes2, 500 * TASK_DELAY_MS);
 }
 void tes2(task *Arg)
@@ -16,24 +16,28 @@ void tes2(task *Arg)
     if (no >= 10)
     {
         digitalWrite(2, Arg->getToggle());
-        Serial.println("delay loop");
+        Log.Print("delay loop\n");
     }
     else
     {
-        Serial.println(no);
+        Log.Print("%d\n",no);
         no++;
     }
+}
+void tes4(task *Arg)
+{
+    Log.Print("delay loop3\n");
 }
 void tes3(task *Arg)
 {
     digitalWrite(2, Arg->getToggle());
-    Serial.println("delay loop 3");
-    // Arg->Loop(tes2);
+    Log.Print("delay loop 3\n");
+    Arg->Loop(tes4, 1000 * TASK_DELAY_MS);
 }
 
 void _SimpleTask()
 {
-    Serial.begin(9600);
+    Log.init(9600);
     thread t1;
     t1.NewTask(TASK_PRIORTY_5, "Init", tes1);
     t1.NewTask(TASK_PRIORTY_0, "Init2", tes3);
