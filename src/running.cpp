@@ -22,7 +22,8 @@ void _TaskRunInit()
     }
 }
 
-void _TaskRunInit()
+//apa ini ya kok double
+void _TaskRunInit2()
 {
     for (int a = 0; a < TASK_PRIORTY; a++)
     {
