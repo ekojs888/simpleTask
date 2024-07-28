@@ -1,0 +1,20 @@
+dalam branch coba akan dilakukan percobaan setelah berhasil akan di simpan ke main
+file dalam coba yang ditambahkan
+1. note.txt
+2. plaformio.ini
+3. src/main.cpp  // untuk coba 
+4. wokwi.toml //untuk simulasi
+5. diagram.json //untuk simulasi design
+
+
+dalam platformio.ini 
+-----
+[env:esp32dev]
+platform = espressif32
+board = esp32dev
+framework = arduino
+lib_deps =
+  ; adafruit/Adafruit NeoPixel @ ^1.12.3
+build_flags =
+    -D TASK_MOD="MyDevice"
+-----
