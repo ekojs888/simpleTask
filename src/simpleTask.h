@@ -67,7 +67,9 @@ public:
     task *Loop(HandlerFunc);
     task *Loop(HandlerFunc, int);
     void RunInit();
-
+    // buat variabel dalam sebuah task
+    int varInt[10];
+    bool varBool[2];
 private:
     unsigned long prevMills;
     int delay = 0;
@@ -91,7 +93,7 @@ private:
     void runFunc();
 };
 
-void funcInitNull(task *Arg);
+// void funcInitNull(task *Arg);
 
 struct thread
 {

@@ -1,5 +1,13 @@
 #include <Arduino.h>
-#include "simpleTask.h"
+#include <simpleTask.h>
+
+//if not use void main(); and void loop(); define TASK_MOD;
+//#define TASK_MOD; 
+// or 
+//take in platfromio.ini add
+// build_flags =
+//   -D TASK_MOD="MyDevice"
+//
 
 void task4(task *Arg)
 {
@@ -36,3 +44,4 @@ void _SimpleTask()
     t1.NewTask(TASK_PRIORTY_5, "Init", task1);
     t1.NewTask(TASK_PRIORTY_1, "test2", task3);
 }
+
